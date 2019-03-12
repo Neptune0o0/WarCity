@@ -1,7 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum BrickType
+{
+    TheGrass,//草
+    TheWater,//水
+    TheMountain,//山
+}
 
 public class PanelTerrainEditor : MonoBehaviour
 {
@@ -28,5 +36,22 @@ public class PanelTerrainEditor : MonoBehaviour
         {
             brickConsole.GeneratedBricks();
         }       
+    }
+
+    //储存当前生成砖块预制体
+    public void ButtonSaveObject()
+    {
+        //判断路径是否存在预制体 不存在创建
+        if (!System.IO.File.Exists("Assets/PrefabOutputName.prefab"))
+        {
+            PrefabUtility.SaveAsPrefabAsset(brickConsole.gameObject, "Assets/PrefabOutputName.prefab");
+        }
+              
+        //AssetDatabase.Refresh();
+    }
+
+    public void ButtonItemBrickCreate(BrickType brickType)
+    {
+
     }
 }
