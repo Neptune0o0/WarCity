@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ItemBrick : MonoBehaviour
 {
+    private void OnMouseDown()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -289,9 +289,6 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
-    <Reference Include="WRP_FBXExporter">
-      <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Assets/Plugins/WRP_FBXExporter.dll</HintPath>
-    </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Program Files/Unity2018.3.6f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
     </Reference>
