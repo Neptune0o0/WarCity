@@ -46,21 +46,25 @@ public class PanelTerrainEditor : MonoBehaviour
 
     //鼠标按下
     private void UpdateMouseDown()
-    {      
-        if (Input.GetKey(KeyCode.Mouse0))//左键
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);                  
-            if (hit.collider != null)
+            if (Input.GetKey(KeyCode.Mouse0))//左键
             {
-                Instantiate(brickGameObjectsArray[brickTypeThis], hit.transform.position,Quaternion.identity, hit.transform.parent);
-                Destroy(hit.collider.gameObject);                
-            }
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null)
+                {
+                    Instantiate(brickGameObjectsArray[brickTypeThis], hit.transform.parent.position, Quaternion.identity, hit.transform.parent.parent);
+                    Destroy(hit.transform.parent.gameObject);
+                }
 
+            }
+            else if (Input.GetKeyDown(KeyCode.Mouse1))//右键
+            {
+                Destroy(brickGameObject);
+            }
         }
-        else if(Input.GetKeyDown(KeyCode.Mouse1))//右键
-        {
-            Destroy(brickGameObject);
-        }
+       
     }
 
     //按钮调用生成砖块的方法

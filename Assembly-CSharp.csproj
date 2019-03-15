@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scene_PlayGame\Script\BrickConsole.cs" />
-    <Compile Include="Assets\Scene_PlayGame\Script\ItemBrick.cs" />
-    <Compile Include="Assets\Scene_PlayGame\Script\MainCameraMove.cs" />
-    <Compile Include="Assets\Scene_PlayGame\Script\PanelTerrainEditor.cs" />
+    <Compile Include="Assets\Scene_TerrainEditor\Script\BrickConsole.cs" />
+    <Compile Include="Assets\Scene_TerrainEditor\Script\ItemBrick.cs" />
+    <Compile Include="Assets\Scene_TerrainEditor\Script\MainCameraMove.cs" />
+    <Compile Include="Assets\Scene_TerrainEditor\Script\PanelTerrainEditor.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
