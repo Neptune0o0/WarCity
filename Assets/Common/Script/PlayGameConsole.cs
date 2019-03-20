@@ -84,7 +84,8 @@ public class PlayGameConsole : MonoBehaviour
     //点击玩家角色
     private void OnThePlayerRole()
     {
-
+        //刷新显示玩家UI信息
+        UiCanvasConsole.instance.InterfaceThePlayerRole();
     }
 
     private void OnTheEnemyRole()

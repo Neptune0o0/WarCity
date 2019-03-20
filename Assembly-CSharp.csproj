@@ -66,6 +66,7 @@
     <Compile Include="Assets\Common\Script\PlayGameConsole.cs" />
     <Compile Include="Assets\Scene_TerrainEditor\Script\BrickConsole.cs" />
     <Compile Include="Assets\Scene_TerrainEditor\Script\PanelTerrainEditor.cs" />
+    <Compile Include="Assets\UiCanvasConsole.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
