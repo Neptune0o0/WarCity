@@ -29,6 +29,8 @@ public class PlayGameConsole : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        brickArray_GameObject = new List<GameObject>();
+
         for (int i = 0; i < playGame.transform.childCount; i++)
         {
             brickArray_GameObject.Add(playGame.transform.GetChild(i).gameObject);
