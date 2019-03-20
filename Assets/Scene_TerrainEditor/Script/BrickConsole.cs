@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BrickConsole : MonoBehaviour
 {
     //地砖物体
@@ -16,7 +17,7 @@ public class BrickConsole : MonoBehaviour
     private void Awake()
     {
         brickArray_GameObject = new List<GameObject>();
-    }
+    }  
 
     /// <summary>
     /// 生成砖块方法
@@ -35,13 +36,19 @@ public class BrickConsole : MonoBehaviour
 
         //实例新的砖块
         Vector3 vector3 = new Vector3();
+        GameObject gameObject;
+        ItemBrick itemBrick;
         for (int i = 0; i < number_x; i++)
         {
             for (int j = 0; j < number_y; j++)
             {
                 vector3.x = i * 2;
                 vector3.y = j * 2;
-                brickArray_GameObject.Add(Instantiate(brick_GameObject, vector3, Quaternion.identity, this.transform));
+                gameObject = Instantiate(brick_GameObject, vector3, Quaternion.identity, this.transform);
+                itemBrick = gameObject.GetComponent<ItemBrick>();
+                itemBrick.x = i;
+                itemBrick.y = j;
+                brickArray_GameObject.Add(gameObject);
             }
         }
     }

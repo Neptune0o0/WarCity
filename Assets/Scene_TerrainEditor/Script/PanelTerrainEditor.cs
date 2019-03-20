@@ -5,12 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum BrickType
-{
-    TheGrass,//草
-    TheWater,//水
-    TheMountain,//山
-}
+
 
 public class PanelTerrainEditor : MonoBehaviour
 {
@@ -29,7 +24,7 @@ public class PanelTerrainEditor : MonoBehaviour
     //当前选中的砖块
     private GameObject brickGameObject;
     private Vector3 brickVector3;
-    private int brickTypeThis;
+    private int brickTypeThis;   
 
     private void Update()
     {
@@ -54,10 +49,11 @@ public class PanelTerrainEditor : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null)
                 {
-                    Instantiate(brickGameObjectsArray[brickTypeThis], hit.transform.parent.position, Quaternion.identity, hit.transform.parent.parent);
+                    GameObject gameObject = Instantiate(brickGameObjectsArray[brickTypeThis], hit.transform.parent.position, Quaternion.identity, hit.transform.parent.parent);
+                    gameObject.GetComponent<ItemBrick>().x = hit.transform.parent.gameObject.GetComponent<ItemBrick>().x;
+                    gameObject.GetComponent<ItemBrick>().y = hit.transform.parent.gameObject.GetComponent<ItemBrick>().y;
                     Destroy(hit.transform.parent.gameObject);
                 }
-
             }
             else if (Input.GetKeyDown(KeyCode.Mouse1))//右键
             {
