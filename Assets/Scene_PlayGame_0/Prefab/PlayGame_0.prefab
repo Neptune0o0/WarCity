@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 657677813}
-  - component: {fileID: 657677812}
   m_Layer: 0
-  m_Name: PrefabName
+  m_Name: PlayGame_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,22 +180,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &657677812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657677811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f37c2b77284cbe6479e28462b6937462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brick_GameObject: {fileID: 611021092815719436, guid: e814556b619db1648873cec9a59fe86f,
-    type: 3}
-  number_x: 15
-  number_y: 10
 --- !u!1 &4820812502900046
 GameObject:
   m_ObjectHideFlags: 0

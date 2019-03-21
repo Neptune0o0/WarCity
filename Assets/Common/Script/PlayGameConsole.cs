@@ -19,25 +19,34 @@ public enum BrickType
     TheCastle,//城堡   
 }
 
-public class PlayGameConsole : MonoBehaviour
+public enum BrickTipType
 {
-    //地砖父物体
-    public GameObject playGame;
-    //用来储存实例砖块
-    private List<GameObject> brickArray_GameObject;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        brickArray_GameObject = new List<GameObject>();
+    BrickTipMove,//移动
+    BrickTipAttack,//攻击
+}
 
-        for (int i = 0; i < playGame.transform.childCount; i++)
-        {
-            brickArray_GameObject.Add(playGame.transform.GetChild(i).gameObject);
-        }
-        
-    }
+//角色结构体
+[System.Serializable]
+public struct RoleStruct
+{
+    public string roleName;
+    public int id, hp, mp, exp, lv,active;
+    public bool isActive;
+}
 
+/// <summary>
+/// 角色职业
+/// </summary>
+public enum RoleProfessional
+{
+    TheWarrior,//战士
+}
+
+public class PlayGameConsole : MonoBehaviour
+{   
+    //当前选中角色物体
+    private GameObject currentRolaObject;
+   
     // Update is called once per frame
     void Update()
     {
@@ -54,9 +63,12 @@ public class PlayGameConsole : MonoBehaviour
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null)
-                {                  
+                {
                     if (hit.collider.GetComponent<ItemRoleType>()) //点击角色
                     {
+                        //选中当前角色物体
+                        currentRolaObject = hit.collider.gameObject;                        
+
                         switch (hit.collider.GetComponent<ItemRoleType>().roleType)
                         {
                             case RoleType.ThePlayerRole:
@@ -73,11 +85,15 @@ public class PlayGameConsole : MonoBehaviour
                     {
 
                     }
+                    else if (hit.collider.GetComponent<ItemBrickTip>())
+                    {
+                        
+                    }
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Mouse1))//右键
             {
-               
+
             }
         }
 
@@ -86,10 +102,14 @@ public class PlayGameConsole : MonoBehaviour
     //点击玩家角色
     private void OnThePlayerRole()
     {
+        RolePlayer rolePlayer = currentRolaObject.GetComponent<RolePlayer>();
+        MapGameConsole.instance.currentRolePlayer = rolePlayer;
+
         //刷新显示玩家UI信息
-        UiCanvasConsole.instance.InterfaceThePlayerRole();
+        UiCanvasConsole.instance.InterfaceThePlayerRole(rolePlayer);
     }
 
     private void OnTheEnemyRole()
     { }
+  
 }
