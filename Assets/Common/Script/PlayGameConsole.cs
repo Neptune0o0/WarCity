@@ -25,12 +25,19 @@ public enum BrickTipType
     BrickTipAttack,//攻击
 }
 
+public enum PlayState
+{
+    TheNull,
+    TheMove,
+    TheAttck,
+}
+
 //角色结构体
 [System.Serializable]
 public struct RoleStruct
 {
     public string roleName;
-    public int id, hp, mp, exp, lv,active;
+    public int id, hp, mp, speed, exp, lv, active;
     public bool isActive;
 }
 
@@ -42,53 +49,74 @@ public enum RoleProfessional
     TheWarrior,//战士
 }
 
+
+public class PlayStateClass
+{
+    public static PlayState playstate;
+}
+
 public class PlayGameConsole : MonoBehaviour
-{   
-    //当前选中角色物体
-    private GameObject currentRolaObject;
-   
+{
     // Update is called once per frame
     void Update()
     {
         UpdateMouseDown();
     }
 
-
     //鼠标按下
     private void UpdateMouseDown()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (Input.GetKey(KeyCode.Mouse0))//左键
+            if (Input.GetKeyDown(KeyCode.Mouse0))//左键
             {
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.GetComponent<ItemRoleType>()) //点击角色
+                    if (hit.transform.parent.GetComponent<ItemBrick>())
                     {
-                        //选中当前角色物体
-                        currentRolaObject = hit.collider.gameObject;                        
+                        ItemBrick itemBrick = hit.transform.parent.GetComponent<ItemBrick>();
 
-                        switch (hit.collider.GetComponent<ItemRoleType>().roleType)
+                        if (itemBrick.rolePlayer != null && itemBrick.brickTip == null)//点击角色
                         {
-                            case RoleType.ThePlayerRole:
-                                OnThePlayerRole();
-                                break;
-                            case RoleType.TheEnemyRole:
-                                OnTheEnemyRole();
-                                break;
-                            default:
-                                break;
+                            switch (itemBrick.rolePlayer.GetComponent<ItemRoleType>().roleType)
+                            {
+                                case RoleType.ThePlayerRole:
+                                    OnThePlayerRole(itemBrick.rolePlayer);
+                                    print("点击玩家角色：" + itemBrick.rolePlayer.name);
+                                    break;
+                                case RoleType.TheEnemyRole:
+                                    OnTheEnemyRole(itemBrick.rolePlayer);
+                                    print("点击敌人角色：" + itemBrick.rolePlayer.name);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                    else if (hit.collider.GetComponent<ItemBrick>())//点击地形
-                    {
-
-                    }
-                    else if (hit.collider.GetComponent<ItemBrickTip>())
-                    {
-                        
-                    }
+                        else if (itemBrick.rolePlayer == null && itemBrick.brickTip == null)//点击地形
+                        {
+                            print("点击：" + itemBrick.brickType);
+                        }
+                        else if (itemBrick.brickTip != null)//点击移动或者攻击
+                        {
+                            switch (itemBrick.brickTip.GetComponent<ItemBrickTip>().brickTipType)
+                            {
+                                case BrickTipType.BrickTipMove:
+                                    print("点击移动");
+                                    MapGameConsole.instance.MoveTo(hit.collider.gameObject, itemBrick);
+                                    break;
+                                case BrickTipType.BrickTipAttack:
+                                    if (itemBrick.rolePlayer != null && itemBrick.rolePlayer.GetComponent<ItemRoleType>().roleType == RoleType.TheEnemyRole)
+                                    {
+                                        print("点击攻击");
+                                        MapGameConsole.instance.AttackTo(itemBrick.rolePlayer);
+                                    }                             
+                                    break;
+                                default:
+                                    break;
+                            }                            
+                        }                       
+                    }                   
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Mouse1))//右键
@@ -100,16 +128,20 @@ public class PlayGameConsole : MonoBehaviour
     }
 
     //点击玩家角色
-    private void OnThePlayerRole()
+    private void OnThePlayerRole(GameObject gameObject)
     {
-        RolePlayer rolePlayer = currentRolaObject.GetComponent<RolePlayer>();
+        RolePlayer rolePlayer = gameObject.GetComponent<RolePlayer>();
         MapGameConsole.instance.currentRolePlayer = rolePlayer;
 
         //刷新显示玩家UI信息
-        UiCanvasConsole.instance.InterfaceThePlayerRole(rolePlayer);
+        UiCanvasConsole.instance.InterfaceTheRole(rolePlayer);
     }
 
-    private void OnTheEnemyRole()
-    { }
-  
+    //点击敌人角色
+    private void OnTheEnemyRole(GameObject gameObject)
+    {
+        ////刷新显示玩家UI信息
+        //UiCanvasConsole.instance.InterfaceTheRole(gameObject.GetComponent<RolePlayer>());
+    }
+
 }

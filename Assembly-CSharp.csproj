@@ -68,9 +68,18 @@
     <Compile Include="Assets\Common\Script\RolePlayer.cs" />
     <Compile Include="Assets\Common\Script\RoleProfessionalTheWarrior.cs" />
     <Compile Include="Assets\Common\Script\UiCanvasConsole.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\ItemBrickTip.cs" />
     <Compile Include="Assets\Scene_TerrainEditor\Script\BrickConsole.cs" />
     <Compile Include="Assets\Scene_TerrainEditor\Script\PanelTerrainEditor.cs" />
+    <Compile Include="Assets\SceneConsole.cs" />
+    <None Include="Assets\DOTween\readme.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -295,6 +304,9 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Assets/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Program Files/Unity2018.3.6f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

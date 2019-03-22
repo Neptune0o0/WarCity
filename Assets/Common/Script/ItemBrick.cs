@@ -8,7 +8,9 @@ public class ItemBrick : MonoBehaviour
     public int x, y;
 
     //当前地砖类型
-    public BrickType brickType;  
+    public BrickType brickType;
+
+    public GameObject rolePlayer,brickTip;
 }
 
 

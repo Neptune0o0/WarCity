@@ -7,7 +7,7 @@ public class UiCanvasConsole : MonoBehaviour
 {
     public static UiCanvasConsole instance;
 
-    public GameObject playerRolePanel;
+    public GameObject playerRolePanel,roleProfessionalPanel;
 
     public Text roleName, id, hp, mp, exp, lv, isActive;
 
@@ -27,10 +27,10 @@ public class UiCanvasConsole : MonoBehaviour
     public void ButtonAttack()
     {
         //显示玩家攻击距离UI
-        MapGameConsole.instance.MoveAtAttack();
+        MapGameConsole.instance.AttackAtDistance();
     }
 
-    public void InterfaceThePlayerRole(RolePlayer rolePlayer)
+    public void InterfaceTheRole(RolePlayer rolePlayer)
     {
         if (playerRolePanel.activeSelf == false)
         {
@@ -39,8 +39,18 @@ public class UiCanvasConsole : MonoBehaviour
 
         InterfaceThePlayerUI(rolePlayer.roleStruct);
 
-        InterfaceThePlayerSkill(rolePlayer.roleProfessional);
+        if (rolePlayer.GetComponent<ItemRoleType>().roleType == RoleType.TheEnemyRole)
+        {
+            roleProfessionalPanel.SetActive(false);
+        }
+        else
+        {
+            roleProfessionalPanel.SetActive(true);
 
+            InterfaceThePlayerSkill(rolePlayer.roleProfessional);
+        }
+            
+        //调用职业相关方法
         switch (rolePlayer.roleProfessional)
         {
             case RoleProfessional.TheWarrior:
