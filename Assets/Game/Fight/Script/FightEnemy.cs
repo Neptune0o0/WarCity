@@ -14,9 +14,15 @@ public class FightEnemy : MonoBehaviour
     private bool invincible = false;
     private float invincibleTime;
 
+    private bool flashingDirection;
+    private float flashing = 1f;
+    private SpriteRenderer spriteRenderer;
+
+
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         forceDamagerNegative = new Vector2(-forceDamager.x, forceDamager.y);
     }
 
@@ -26,10 +32,35 @@ public class FightEnemy : MonoBehaviour
         {
             invincibleTime += Time.deltaTime;
 
+            if (flashingDirection)
+            {
+                flashing -= Time.deltaTime * 5;
+                spriteRenderer.color = new Color(1f,1f,1f, flashing);
+
+                if (flashing <= 0)
+                {
+                    flashing = 0;
+                    flashingDirection = false;
+                }
+            }
+            else
+            {
+                flashing += Time.deltaTime * 5;
+                spriteRenderer.color = new Color(1f, 1f, 1f, flashing);
+
+                if (flashing >= 1)
+                {
+                    flashing = 1;
+                    flashingDirection = true;
+                }
+            }
+
             if (invincibleTime > 1f)
             {
                 invincibleTime = 0;
                 invincible = false;
+
+                spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
             }
         }
     }
@@ -44,14 +75,13 @@ public class FightEnemy : MonoBehaviour
 
         roleStruct.hp -= damage;
         
-
         if (roleStruct.hp <= 0)
         {
             //死亡
         }
 
         //无敌
-        invincible = true;
+        invincible = true;        
 
         //被击退
         if (player.transform.localScale.x == -1)
