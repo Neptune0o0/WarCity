@@ -13,7 +13,7 @@ public class SceneConsole : MonoBehaviour
 {
     public static SceneConsole instance;
 
-    public RolePlayer rolePlayer, roleEnemy;
+    public Role rolePlayer, roleEnemy;
 
     private void Awake()
     {

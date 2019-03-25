@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoleProfessionalTheWarrior : MonoBehaviour
 {
-    public RolePlayer rolePlayer;
+    public Role rolePlayer;
 
     //技能
     public void Skill1()

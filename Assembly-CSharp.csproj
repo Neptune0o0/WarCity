@@ -60,14 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Common\Script\ItemBrick.cs" />
-    <Compile Include="Assets\Common\Script\ItemRoleType.cs" />
-    <Compile Include="Assets\Common\Script\MainCameraMove.cs" />
-    <Compile Include="Assets\Common\Script\MapGameConsole.cs" />
-    <Compile Include="Assets\Common\Script\PlayGameConsole.cs" />
-    <Compile Include="Assets\Common\Script\RolePlayer.cs" />
-    <Compile Include="Assets\Common\Script\RoleProfessionalTheWarrior.cs" />
-    <Compile Include="Assets\Common\Script\UiCanvasConsole.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
@@ -75,10 +67,22 @@
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\ItemBrickTip.cs" />
-    <Compile Include="Assets\Scene_TerrainEditor\Script\BrickConsole.cs" />
-    <Compile Include="Assets\Scene_TerrainEditor\Script\PanelTerrainEditor.cs" />
-    <Compile Include="Assets\SceneConsole.cs" />
+    <Compile Include="Assets\Game\Common\Script\ItemBrick.cs" />
+    <Compile Include="Assets\Game\Common\Script\ItemBrickTip.cs" />
+    <Compile Include="Assets\Game\Common\Script\ItemRoleType.cs" />
+    <Compile Include="Assets\Game\Common\Script\MainCameraMove.cs" />
+    <Compile Include="Assets\Game\Common\Script\MapGameConsole.cs" />
+    <Compile Include="Assets\Game\Common\Script\PlayGameConsole.cs" />
+    <Compile Include="Assets\Game\Common\Script\Role.cs" />
+    <Compile Include="Assets\Game\Common\Script\RoleProfessionalTheWarrior.cs" />
+    <Compile Include="Assets\Game\Common\Script\SceneConsole.cs" />
+    <Compile Include="Assets\Game\Common\Script\UiCanvasConsole.cs" />
+    <Compile Include="Assets\Game\Fight\Script\FightConsole.cs" />
+    <Compile Include="Assets\Game\Fight\Script\FightEnemy.cs" />
+    <Compile Include="Assets\Game\Fight\Script\FightPlayer.cs" />
+    <Compile Include="Assets\Game\Fight\Script\FightRoleAttack.cs" />
+    <Compile Include="Assets\Game\TerrainEditor\Script\BrickConsole.cs" />
+    <Compile Include="Assets\Game\TerrainEditor\Script\PanelTerrainEditor.cs" />
     <None Include="Assets\DOTween\readme.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -296,6 +300,9 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>D:/Program Files/Unity2018.3.6f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Assets/DOTween/DOTween.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
@@ -304,9 +311,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>D:/Neptune/2018UnityProject/Github/WarCity/Assets/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Program Files/Unity2018.3.6f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

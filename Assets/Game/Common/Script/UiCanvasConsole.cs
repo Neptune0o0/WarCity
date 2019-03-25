@@ -30,7 +30,7 @@ public class UiCanvasConsole : MonoBehaviour
         MapGameConsole.instance.AttackAtDistance();
     }
 
-    public void InterfaceTheRole(RolePlayer rolePlayer)
+    public void InterfaceTheRole(Role rolePlayer)
     {
         if (playerRolePanel.activeSelf == false)
         {
@@ -47,11 +47,11 @@ public class UiCanvasConsole : MonoBehaviour
         {
             roleProfessionalPanel.SetActive(true);
 
-            InterfaceThePlayerSkill(rolePlayer.roleProfessional);
+            InterfaceThePlayerSkill(rolePlayer.roleStruct.roleProfessional);
         }
             
         //调用职业相关方法
-        switch (rolePlayer.roleProfessional)
+        switch (rolePlayer.roleStruct.roleProfessional)
         {
             case RoleProfessional.TheWarrior:
                 RoleButtonRegister_Warrior();

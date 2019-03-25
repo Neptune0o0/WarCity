@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RolePlayer : MonoBehaviour
+public class Role : MonoBehaviour
 {
-    public RoleStruct roleStruct;
+    public RoleStruct roleStruct;  
 
-    //职业
-    public RoleProfessional roleProfessional;
-
+    [HideInInspector]
     public ItemBrick thisItemBrick;
 
     // Start is called before the first frame update
@@ -29,7 +27,7 @@ public class RolePlayer : MonoBehaviour
         }
        
         //初始化根据职业赋值相应职业脚本
-        switch (roleProfessional)
+        switch (roleStruct.roleProfessional)
         {
             case RoleProfessional.TheWarrior:
                 this.gameObject.AddComponent<RoleProfessionalTheWarrior>().rolePlayer = this;

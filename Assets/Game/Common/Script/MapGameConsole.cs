@@ -9,7 +9,7 @@ public class MapGameConsole : MonoBehaviour
 
     //当前选中角色物体
     [HideInInspector]
-    public RolePlayer currentRolePlayer;
+    public Role currentRolePlayer;
 
     //地砖父物体
     public GameObject playGame;
@@ -148,7 +148,7 @@ public class MapGameConsole : MonoBehaviour
 
         //赋值战斗场景 人物属性
         SceneConsole.instance.rolePlayer = currentRolePlayer;
-        SceneConsole.instance.roleEnemy = targetEnemy.GetComponent<RolePlayer>();
+        SceneConsole.instance.roleEnemy = targetEnemy.GetComponent<Role>();
 
         //销毁攻击提示
         for (int i = 0; i < brickTipAttack_GameObject.Count; i++)

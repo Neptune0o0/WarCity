@@ -37,8 +37,10 @@ public enum PlayState
 public struct RoleStruct
 {
     public string roleName;
-    public int id, hp, mp, speed, exp, lv, active;
+    public int id, hp, mp, speed, exp, lv, active,attack;
     public bool isActive;
+    //职业
+    public RoleProfessional roleProfessional;
 }
 
 /// <summary>
@@ -130,7 +132,7 @@ public class PlayGameConsole : MonoBehaviour
     //点击玩家角色
     private void OnThePlayerRole(GameObject gameObject)
     {
-        RolePlayer rolePlayer = gameObject.GetComponent<RolePlayer>();
+        Role rolePlayer = gameObject.GetComponent<Role>();
         MapGameConsole.instance.currentRolePlayer = rolePlayer;
 
         //刷新显示玩家UI信息
