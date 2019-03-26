@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2209591525682613864}
   - component: {fileID: 6955548710429295834}
-  - component: {fileID: 8730849870229311793}
   - component: {fileID: 3927724646413594783}
   m_Layer: 0
   m_Name: RoleEnemy
@@ -81,19 +80,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8730849870229311793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5607494327217771187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bcbc5a971c418e46bfcc8bd46bfdb80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roleType: 1
 --- !u!114 &3927724646413594783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb1a280c5b2fde4eac412998b2fca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roleType: 1
   roleStruct:
     roleName: "\u61D2\u4EBAB"
     id: 0
@@ -115,6 +102,7 @@ MonoBehaviour:
     exp: 0
     lv: 0
     active: 2
+    attack: 10
     isActive: 1
-  roleProfessional: 0
+    roleProfessional: 0
   thisItemBrick: {fileID: 0}

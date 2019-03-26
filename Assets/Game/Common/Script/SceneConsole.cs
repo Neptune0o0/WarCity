@@ -15,6 +15,8 @@ public class SceneConsole : MonoBehaviour
 
     public Role rolePlayer, roleEnemy;
 
+    public static string currentSceneName;
+
     private void Awake()
     {
         instance = this;               
@@ -25,13 +27,7 @@ public class SceneConsole : MonoBehaviour
         switch (sceneFight)
         {
             case SceneFight.TheGrass:
-                SceneManager.LoadScene("FightTheGrass", LoadSceneMode.Additive);
-
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    transform.GetChild(i).gameObject.SetActive(false);
-                }
-
+                currentSceneName = "FightTheGrass";               
                 break;
             case SceneFight.TheWater:
                 break;
@@ -39,5 +35,22 @@ public class SceneConsole : MonoBehaviour
                 break;
         }
 
+        SceneManager.LoadScene(currentSceneName, LoadSceneMode.Additive);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+    }
+
+    public void RemoveScene()
+    {
+        SceneManager.UnloadSceneAsync(currentSceneName);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 }

@@ -14,15 +14,15 @@ public class FightEnemy : MonoBehaviour
     private bool invincible = false;
     private float invincibleTime;
 
-    private bool flashingDirection;
-    private float flashing = 1f;
-    private SpriteRenderer spriteRenderer;
+    //private bool flashingDirection;
+    //private float flashing = 1f;
+    //private SpriteRenderer spriteRenderer;
 
 
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
         forceDamagerNegative = new Vector2(-forceDamager.x, forceDamager.y);
     }
 
@@ -32,35 +32,35 @@ public class FightEnemy : MonoBehaviour
         {
             invincibleTime += Time.deltaTime;
 
-            if (flashingDirection)
-            {
-                flashing -= Time.deltaTime * 5;
-                spriteRenderer.color = new Color(1f,1f,1f, flashing);
+            //if (flashingDirection)
+            //{
+            //    flashing -= Time.deltaTime * 5;
+            //    spriteRenderer.color = new Color(1f,1f,1f, flashing);
 
-                if (flashing <= 0)
-                {
-                    flashing = 0;
-                    flashingDirection = false;
-                }
-            }
-            else
-            {
-                flashing += Time.deltaTime * 5;
-                spriteRenderer.color = new Color(1f, 1f, 1f, flashing);
+            //    if (flashing <= 0)
+            //    {
+            //        flashing = 0;
+            //        flashingDirection = false;
+            //    }
+            //}
+            //else
+            //{
+            //    flashing += Time.deltaTime * 5;
+            //    spriteRenderer.color = new Color(1f, 1f, 1f, flashing);
 
-                if (flashing >= 1)
-                {
-                    flashing = 1;
-                    flashingDirection = true;
-                }
-            }
+            //    if (flashing >= 1)
+            //    {
+            //        flashing = 1;
+            //        flashingDirection = true;
+            //    }
+            //}
 
             if (invincibleTime > 1f)
             {
                 invincibleTime = 0;
                 invincible = false;
 
-                spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+                //spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
             }
         }
     }
@@ -78,10 +78,13 @@ public class FightEnemy : MonoBehaviour
         if (roleStruct.hp <= 0)
         {
             //死亡
+            Die();
+
+            return;
         }
 
-        //无敌
-        invincible = true;        
+        ////无敌
+        //invincible = true;        
 
         //被击退
         if (player.transform.localScale.x == -1)
@@ -92,5 +95,12 @@ public class FightEnemy : MonoBehaviour
         {
             rigidbody2d.AddForce(forceDamager, ForceMode2D.Impulse);
         }
+    }
+
+    //死亡方法
+    private void Die()
+    {
+        //数据传递到大地图
+        FightConsole.instance.FightEnd();       
     }
 }

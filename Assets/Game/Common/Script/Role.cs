@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Role : MonoBehaviour
 {
+    public RoleType roleType;
+
     public RoleStruct roleStruct;  
 
     [HideInInspector]
@@ -34,6 +36,32 @@ public class Role : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        //初始化在注册在list中
+        if (roleType == RoleType.TheEnemyRole)
+        {
+            PlayGameConsole.rolesEnemy.Add(this);
+        }
+        else
+        {
+            PlayGameConsole.rolesPlayer.Add(this);
+        }
+       
+    }
+
+    //大地图下角色死亡
+    public void Die()
+    {
+        Destroy(this.gameObject);
+
+        if (roleType == RoleType.TheEnemyRole)
+        {
+            PlayGameConsole.rolesEnemy.Remove(this);
+        }
+        else
+        {
+            PlayGameConsole.rolesPlayer.Remove(this);
         }
     }
 }

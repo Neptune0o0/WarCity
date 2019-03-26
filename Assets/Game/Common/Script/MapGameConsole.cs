@@ -9,12 +9,11 @@ public class MapGameConsole : MonoBehaviour
 
     //当前选中角色物体
     [HideInInspector]
-    public Role currentRolePlayer;
+    public Role currentRole;
 
     //地砖父物体
     public GameObject playGame;
     //用来储存实例砖块
-    private List<GameObject> brickArray_GameObject;
     private List<ItemBrick> brickArray_ItemBrick;
 
     public GameObject BrickTipMove, BrickTipAttack;
@@ -26,16 +25,27 @@ public class MapGameConsole : MonoBehaviour
     {
         instance = this;
 
-        brickArray_GameObject = new List<GameObject>();
         brickArray_ItemBrick = new List<ItemBrick>();
         brickTipMove_GameObject = new List<GameObject>();
         brickTipAttack_GameObject = new List<GameObject>();
 
         for (int i = 0; i < playGame.transform.childCount; i++)
         {
-            brickArray_GameObject.Add(playGame.transform.GetChild(i).gameObject);
             brickArray_ItemBrick.Add(playGame.transform.GetChild(i).GetComponent<ItemBrick>());
         }
+    }
+
+    //判断两个地砖的距离
+    public int JudgeDistances(ItemBrick initial, ItemBrick target)
+    {
+        int xDis, yDis;
+
+        xDis = target.x - initial.x;
+        yDis = target.y - initial.y;
+        xDis = Mathf.Abs(xDis);
+        yDis = Mathf.Abs(yDis);
+
+        return xDis + yDis;
     }
 
     //显示玩家可移动砖块提示
@@ -47,7 +57,13 @@ public class MapGameConsole : MonoBehaviour
             Destroy(brickTipAttack_GameObject[i]);
         }
 
-        if (currentRolePlayer.roleStruct.active <= 0)
+        //销毁移动提示
+        for (int i = 0; i < brickTipMove_GameObject.Count; i++)
+        {
+            Destroy(brickTipMove_GameObject[i]);
+        }
+
+        if (currentRole.roleStruct.active <= 0)
         {
             return;
         }
@@ -56,8 +72,8 @@ public class MapGameConsole : MonoBehaviour
 
         for (int i = 0; i < brickArray_ItemBrick.Count; i++)
         {
-            xDis = brickArray_ItemBrick[i].x - currentRolePlayer.thisItemBrick.x;
-            yDis = brickArray_ItemBrick[i].y - currentRolePlayer.thisItemBrick.y;
+            xDis = brickArray_ItemBrick[i].x - currentRole.thisItemBrick.x;
+            yDis = brickArray_ItemBrick[i].y - currentRole.thisItemBrick.y;
             xDis = Mathf.Abs(xDis);
             yDis = Mathf.Abs(yDis);
 
@@ -74,24 +90,24 @@ public class MapGameConsole : MonoBehaviour
                 }
             }
         }
-    }   
+    }
 
     //移动方法
-    public void MoveTo(GameObject targetPoint, ItemBrick itemBrick)
+    public void MoveTo(ItemBrick itemBrick,TweenCallback tweenCallback = null)
     {
-        currentRolePlayer.thisItemBrick.rolePlayer = null;
+        currentRole.thisItemBrick.rolePlayer = null;
 
-        currentRolePlayer.thisItemBrick = itemBrick;
+        currentRole.thisItemBrick = itemBrick;
 
-        itemBrick.rolePlayer = currentRolePlayer.gameObject;
+        itemBrick.rolePlayer = currentRole.gameObject;
 
-        Vector2 vector2 = targetPoint.transform.position;
+        Vector2 vector2 = itemBrick.transform.position;
 
-        Tweener tweeners = currentRolePlayer.transform.DOMove(vector2, 1f);
+        Tweener tweeners = currentRole.transform.DOMove(vector2, 1f);
 
         tweeners.SetEase(Ease.OutQuad);//设置动画的运动曲线，可以选择很多种
 
-        tweeners.OnComplete(MoveToEnd);//设置一个事件，就是动画播放完成后执行下一步，可以执行某一个函数。        
+        tweeners.OnComplete(tweenCallback);//设置一个事件，就是动画播放完成后执行下一步，可以执行某一个函数。        
 
         //销毁移动提示
         for (int i = 0; i < brickTipMove_GameObject.Count; i++)
@@ -99,13 +115,8 @@ public class MapGameConsole : MonoBehaviour
             Destroy(brickTipMove_GameObject[i]);
         }
 
-        currentRolePlayer.roleStruct.active -= 1;
-    }
-
-    //移动结束
-    public void MoveToEnd()
-    {
-    }
+        currentRole.roleStruct.active -= 1;
+    }    
 
     //攻击提示显示
     public void AttackAtDistance()
@@ -116,7 +127,13 @@ public class MapGameConsole : MonoBehaviour
             Destroy(brickTipMove_GameObject[i]);
         }
 
-        if (currentRolePlayer.roleStruct.active <= 0)
+        //销毁攻击提示
+        for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
+        {
+            Destroy(brickTipAttack_GameObject[i]);
+        }
+
+        if (currentRole.roleStruct.active <= 0)
         {
             return;
         }
@@ -125,8 +142,8 @@ public class MapGameConsole : MonoBehaviour
 
         for (int i = 0; i < brickArray_ItemBrick.Count; i++)
         {
-            xDis = brickArray_ItemBrick[i].x - currentRolePlayer.thisItemBrick.x;
-            yDis = brickArray_ItemBrick[i].y - currentRolePlayer.thisItemBrick.y;
+            xDis = brickArray_ItemBrick[i].x - currentRole.thisItemBrick.x;
+            yDis = brickArray_ItemBrick[i].y - currentRole.thisItemBrick.y;
             xDis = Mathf.Abs(xDis);
             yDis = Mathf.Abs(yDis);
 
@@ -141,14 +158,23 @@ public class MapGameConsole : MonoBehaviour
     }
 
     //玩家攻击选中敌人
-    public void AttackTo(GameObject targetEnemy)
+    public void AttackTo(GameObject targetRole, RoleType roleType)
     {
         //切换战斗场景
         SceneConsole.instance.LoadScene(SceneFight.TheGrass);
 
         //赋值战斗场景 人物属性
-        SceneConsole.instance.rolePlayer = currentRolePlayer;
-        SceneConsole.instance.roleEnemy = targetEnemy.GetComponent<Role>();
+        if (roleType == RoleType.ThePlayerRole)
+        {
+            SceneConsole.instance.rolePlayer = currentRole;
+            SceneConsole.instance.roleEnemy = targetRole.GetComponent<Role>();
+        }
+        else
+        {
+            SceneConsole.instance.rolePlayer = targetRole.GetComponent<Role>();
+            SceneConsole.instance.roleEnemy = currentRole;
+        }
+       
 
         //销毁攻击提示
         for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
@@ -156,6 +182,29 @@ public class MapGameConsole : MonoBehaviour
             Destroy(brickTipAttack_GameObject[i]);
         }
 
-        currentRolePlayer.roleStruct.active -= 1;
+        currentRole.roleStruct.active -= 1;
+    }
+
+    //AI移动判断移动的目标点
+    public ItemBrick AI_JudgeMoveTarget(Role targetRole)
+    {
+        int dis = 0;
+        int tempdis = 10000;
+        int disIndex = 0;
+
+        for (int i = 0; i < brickArray_ItemBrick.Count; i++)
+        {
+            if (brickArray_ItemBrick[i].brickTip != null)
+            {
+                dis = JudgeDistances(brickArray_ItemBrick[i], targetRole.thisItemBrick);
+                if (dis < tempdis)
+                {
+                    tempdis = dis;
+                    disIndex = i;
+                }
+            }
+        }
+
+        return brickArray_ItemBrick[disIndex];
     }
 }

@@ -13,6 +13,8 @@ public class UiCanvasConsole : MonoBehaviour
 
     public GameObject[] playerProfessionalPanel;
 
+    public GameObject ButtonTurn;
+
     private void Awake()
     {
         instance = this;
@@ -39,7 +41,7 @@ public class UiCanvasConsole : MonoBehaviour
 
         InterfaceThePlayerUI(rolePlayer.roleStruct);
 
-        if (rolePlayer.GetComponent<ItemRoleType>().roleType == RoleType.TheEnemyRole)
+        if (rolePlayer.roleType == RoleType.TheEnemyRole)
         {
             roleProfessionalPanel.SetActive(false);
         }
@@ -84,5 +86,23 @@ public class UiCanvasConsole : MonoBehaviour
     private void RoleButtonRegister_Warrior()
     {
 
+    }
+
+    public void ButtonEndTheTurn()
+    {
+        PlayGameConsole.instance.PlayerTurnEnd();
+
+        ButtonTurn.SetActive(false);
+
+        if (playerRolePanel.activeSelf == true)
+        {
+            playerRolePanel.SetActive(false);
+        }
+    }
+
+
+    public void EnemyEndTheTurn()
+    {
+        ButtonTurn.SetActive(true);
     }
 }

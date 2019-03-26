@@ -28,8 +28,8 @@ public enum BrickTipType
 public enum PlayState
 {
     TheNull,
-    TheMove,
-    TheAttck,
+    ThePlayerRound,
+    TheEnemyRound,
 }
 
 //角色结构体
@@ -52,23 +52,39 @@ public enum RoleProfessional
 }
 
 
-public class PlayStateClass
-{
-    public static PlayState playstate;
-}
-
 public class PlayGameConsole : MonoBehaviour
 {
+    public static PlayGameConsole instance;
+
+    public static List<Role> rolesPlayer;
+    public static List<Role> rolesEnemy;
+
+    public static PlayState playState;
+
+    private void Awake()
+    {
+        instance = this;
+
+        playState = PlayState.ThePlayerRound;
+
+        rolesPlayer = new List<Role>();
+        rolesEnemy = new List<Role>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        UpdateMouseDown();
+        if (playState == PlayState.ThePlayerRound)
+        {
+            UpdateMouseDown();
+        }
+        
     }
 
     //鼠标按下
     private void UpdateMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject() )
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))//左键
             {
@@ -81,7 +97,7 @@ public class PlayGameConsole : MonoBehaviour
 
                         if (itemBrick.rolePlayer != null && itemBrick.brickTip == null)//点击角色
                         {
-                            switch (itemBrick.rolePlayer.GetComponent<ItemRoleType>().roleType)
+                            switch (itemBrick.rolePlayer.GetComponent<Role>().roleType)
                             {
                                 case RoleType.ThePlayerRole:
                                     OnThePlayerRole(itemBrick.rolePlayer);
@@ -105,13 +121,13 @@ public class PlayGameConsole : MonoBehaviour
                             {
                                 case BrickTipType.BrickTipMove:
                                     print("点击移动");
-                                    MapGameConsole.instance.MoveTo(hit.collider.gameObject, itemBrick);
+                                    MapGameConsole.instance.MoveTo(itemBrick);
                                     break;
                                 case BrickTipType.BrickTipAttack:
-                                    if (itemBrick.rolePlayer != null && itemBrick.rolePlayer.GetComponent<ItemRoleType>().roleType == RoleType.TheEnemyRole)
+                                    if (itemBrick.rolePlayer != null && itemBrick.rolePlayer.GetComponent<Role>().roleType == RoleType.TheEnemyRole)
                                     {
                                         print("点击攻击");
-                                        MapGameConsole.instance.AttackTo(itemBrick.rolePlayer);
+                                        MapGameConsole.instance.AttackTo(itemBrick.rolePlayer,RoleType.ThePlayerRole);
                                     }                             
                                     break;
                                 default:
@@ -133,7 +149,7 @@ public class PlayGameConsole : MonoBehaviour
     private void OnThePlayerRole(GameObject gameObject)
     {
         Role rolePlayer = gameObject.GetComponent<Role>();
-        MapGameConsole.instance.currentRolePlayer = rolePlayer;
+        MapGameConsole.instance.currentRole = rolePlayer;
 
         //刷新显示玩家UI信息
         UiCanvasConsole.instance.InterfaceTheRole(rolePlayer);
@@ -146,4 +162,35 @@ public class PlayGameConsole : MonoBehaviour
         //UiCanvasConsole.instance.InterfaceTheRole(gameObject.GetComponent<RolePlayer>());
     }
 
+    //回合结束
+    public void PlayerTurnEnd()
+    {
+        playState = PlayState.TheEnemyRound;
+
+        for (int i = 0; i < rolesEnemy.Count; i++)
+        {
+            rolesEnemy[i].roleStruct.active = 2;
+        }
+
+        EnemyTurn();
+    }
+
+    //敌人回合
+    private void EnemyTurn()
+    {
+        EnemyAIConsole.instance.EnemyThinking();
+    }
+
+    //敌人回合结束
+    public void EnemyTurnEnd()
+    {
+        playState = PlayState.ThePlayerRound;
+
+        for (int i = 0; i < rolesPlayer.Count; i++)
+        {
+            rolesPlayer[i].roleStruct.active = 2;
+        }
+
+        UiCanvasConsole.instance.EnemyEndTheTurn();
+    }
 }
