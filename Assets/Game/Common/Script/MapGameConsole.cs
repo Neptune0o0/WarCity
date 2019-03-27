@@ -15,6 +15,8 @@ public class MapGameConsole : MonoBehaviour
     public GameObject playGame;
     //用来储存实例砖块
     private List<ItemBrick> brickArray_ItemBrick;
+    //玩家与敌人城堡脚本
+    private Castle castlePlayer, castleEnemy;
 
     public GameObject BrickTipMove, BrickTipAttack;
     private List<GameObject> brickTipMove_GameObject;
@@ -29,9 +31,24 @@ public class MapGameConsole : MonoBehaviour
         brickTipMove_GameObject = new List<GameObject>();
         brickTipAttack_GameObject = new List<GameObject>();
 
+        Castle castle;
         for (int i = 0; i < playGame.transform.childCount; i++)
         {
             brickArray_ItemBrick.Add(playGame.transform.GetChild(i).GetComponent<ItemBrick>());
+            
+            if (playGame.transform.GetChild(i).GetComponent<Castle>())
+            {
+                castle = playGame.transform.GetChild(i).GetComponent<Castle>();
+                if (castle.castleType == CastleType.ThePlayerCastle)
+                {
+                    castlePlayer = playGame.transform.GetChild(i).GetComponent<Castle>();
+                }
+                else if (playGame.transform.GetChild(i).GetComponent<Castle>().castleType == CastleType.TheEnemyCastle)
+                {
+                    castleEnemy = playGame.transform.GetChild(i).GetComponent<Castle>();
+                }              
+            }
+           
         }
     }
 
@@ -207,4 +224,6 @@ public class MapGameConsole : MonoBehaviour
 
         return brickArray_ItemBrick[disIndex];
     }
+    
+
 }

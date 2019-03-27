@@ -52,5 +52,11 @@ public class SceneConsole : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
+
+        //敌人回合战斗结束 
+        if (PlayGameConsole.playState == PlayState.TheEnemyRound)
+        {
+            EnemyAIConsole.instance.AttackEnd();
+        }
     }
 }

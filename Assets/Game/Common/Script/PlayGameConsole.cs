@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum CastleType
+{
+    ThePlayerCastle,//玩家
+    TheEnemyCastle,//敌人
+}
+
 public enum RoleType
 {
     ThePlayerRole,//玩家角色
@@ -113,7 +119,7 @@ public class PlayGameConsole : MonoBehaviour
                         }
                         else if (itemBrick.rolePlayer == null && itemBrick.brickTip == null)//点击地形
                         {
-                            print("点击：" + itemBrick.brickType);
+                            print("点击：" + itemBrick.brickType);                           
                         }
                         else if (itemBrick.brickTip != null)//点击移动或者攻击
                         {
@@ -162,7 +168,7 @@ public class PlayGameConsole : MonoBehaviour
         //UiCanvasConsole.instance.InterfaceTheRole(gameObject.GetComponent<RolePlayer>());
     }
 
-    //回合结束
+    //玩家回合结束
     public void PlayerTurnEnd()
     {
         playState = PlayState.TheEnemyRound;
@@ -178,7 +184,9 @@ public class PlayGameConsole : MonoBehaviour
     //敌人回合
     private void EnemyTurn()
     {
-        EnemyAIConsole.instance.EnemyThinking();
+        EnemyAIConsole.index = 0;
+
+        EnemyAIConsole.instance.EnemyThinking();       
     }
 
     //敌人回合结束

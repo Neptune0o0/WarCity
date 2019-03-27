@@ -7,7 +7,7 @@ public class EnemyAIConsole : MonoBehaviour
     public static EnemyAIConsole instance;
 
     int indexMax;
-    int index = 0;
+    public static int index = 0;
 
     private void Awake()
     {
@@ -19,13 +19,23 @@ public class EnemyAIConsole : MonoBehaviour
     {
         indexMax = PlayGameConsole.rolesEnemy.Count;
 
-        MapGameConsole.instance.currentRole = PlayGameConsole.rolesEnemy[index];
-
-        if (PlayGameConsole.rolesEnemy[index].roleStruct.active <= 0)
+        if (indexMax <=0)
         {
             PlayGameConsole.instance.EnemyTurnEnd();
             return;
         }
+
+        if (PlayGameConsole.rolesEnemy[index].roleStruct.active <= 0)
+        {
+            index++;
+            if (index >= indexMax)
+            {
+                PlayGameConsole.instance.EnemyTurnEnd();
+                return;
+            }
+        }
+
+        MapGameConsole.instance.currentRole = PlayGameConsole.rolesEnemy[index];
 
         //判断是否可以直接攻击
         if (MapGameConsole.instance.JudgeDistances(JudgeRecently(PlayGameConsole.rolesEnemy[index]).thisItemBrick,
@@ -69,6 +79,11 @@ public class EnemyAIConsole : MonoBehaviour
         ItemBrick itemBrick = MapGameConsole.instance.AI_JudgeMoveTarget(role);
 
         MapGameConsole.instance.AttackTo(itemBrick.rolePlayer, RoleType.TheEnemyRole);
+    }
+
+    public void AttackEnd()
+    {
+        EnemyThinking();
     }
 
     private Role JudgeRecently(Role role)

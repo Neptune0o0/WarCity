@@ -116,6 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6244155464490200334}
   - component: {fileID: 6889408624764341223}
+  - component: {fileID: 241620542856808324}
   m_Layer: 0
   m_Name: ItemBrick5
   m_TagString: Untagged
@@ -153,3 +154,17 @@ MonoBehaviour:
   x: 0
   y: 0
   brickType: 5
+  rolePlayer: {fileID: 0}
+  brickTip: {fileID: 0}
+--- !u!114 &241620542856808324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611021092815719436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e93b3f0538d16479f04c30c4876dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

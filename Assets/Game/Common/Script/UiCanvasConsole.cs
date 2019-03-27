@@ -7,13 +7,15 @@ public class UiCanvasConsole : MonoBehaviour
 {
     public static UiCanvasConsole instance;
 
-    public GameObject playerRolePanel,roleProfessionalPanel;
+    public GameObject playerRolePanel,roleProfessionalPanel, castlePanel;
 
     public Text roleName, id, hp, mp, exp, lv, isActive;
 
     public GameObject[] playerProfessionalPanel;
 
-    public GameObject ButtonTurn;
+    public GameObject buttonTurn, buttonOpenCastlePanel;
+
+
 
     private void Awake()
     {
@@ -30,6 +32,19 @@ public class UiCanvasConsole : MonoBehaviour
     {
         //显示玩家攻击距离UI
         MapGameConsole.instance.AttackAtDistance();
+    }
+
+    //打开城堡界面
+    public void ButtonOpenCastlePanel()
+    {
+        if (castlePanel.activeSelf == false)
+        {
+            castlePanel.SetActive(true);           
+        }
+        else
+        {
+            castlePanel.SetActive(false);
+        }
     }
 
     public void InterfaceTheRole(Role rolePlayer)
@@ -88,21 +103,29 @@ public class UiCanvasConsole : MonoBehaviour
 
     }
 
+    //回合结束按钮
     public void ButtonEndTheTurn()
     {
         PlayGameConsole.instance.PlayerTurnEnd();
 
-        ButtonTurn.SetActive(false);
+        buttonTurn.SetActive(false);
 
         if (playerRolePanel.activeSelf == true)
         {
             playerRolePanel.SetActive(false);
+        }
+
+        if (castlePanel.activeSelf == true)
+        {
+            castlePanel.SetActive(false);
         }
     }
 
 
     public void EnemyEndTheTurn()
     {
-        ButtonTurn.SetActive(true);
+        buttonTurn.SetActive(true);
     }
+
+   
 }
