@@ -94,11 +94,27 @@ public class MapGameConsole : MonoBehaviour
             xDis = Mathf.Abs(xDis);
             yDis = Mathf.Abs(yDis);
 
-            if ((xDis + yDis) < 4 && (xDis + yDis) > 0)
+            if ((xDis + yDis) < currentRole.roleStruct.speed && (xDis + yDis) > 0)
             {
                 if (brickArray_ItemBrick[i].brickType != BrickType.TheWater &&
                     brickArray_ItemBrick[i].brickType != BrickType.TheMountain &&
                     brickArray_ItemBrick[i].rolePlayer == null)
+                {
+                    GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
+                    gameObject.transform.position -= Vector3.forward;
+                    brickArray_ItemBrick[i].brickTip = gameObject;
+                    brickTipMove_GameObject.Add(gameObject);
+                }
+
+                if (brickArray_ItemBrick[i].brickType == BrickType.TheWater && currentRole.roleStruct.roleProfessional == RoleProfessional.TheFishMen)
+                {
+                    GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
+                    gameObject.transform.position -= Vector3.forward;
+                    brickArray_ItemBrick[i].brickTip = gameObject;
+                    brickTipMove_GameObject.Add(gameObject);
+                }
+
+                if (brickArray_ItemBrick[i].brickType == BrickType.TheMountain && currentRole.roleStruct.roleProfessional == RoleProfessional.TheBirdMan)
                 {
                     GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
                     gameObject.transform.position -= Vector3.forward;

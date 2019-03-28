@@ -27,12 +27,32 @@ public class Role : MonoBehaviour
                 }
             }
         }
-       
+
         //初始化根据职业赋值相应职业脚本
         switch (roleStruct.roleProfessional)
         {
-            case RoleProfessional.TheWarrior:
-                this.gameObject.AddComponent<RoleProfessionalTheWarrior>().rolePlayer = this;
+            case RoleProfessional.TheFireWarrior:
+                this.gameObject.AddComponent<RoleTheFireWarrior>().rolePlayer = this;
+                break;
+            case RoleProfessional.ThePrince:
+                break;
+            case RoleProfessional.TheFishMen:
+                break;
+            case RoleProfessional.TheBirdMan:
+                break;
+            case RoleProfessional.TheEnchanter:
+                break;
+            case RoleProfessional.TheMonks:
+                break;
+            case RoleProfessional.TheBruiser:
+                break;
+            case RoleProfessional.TheBigMan:
+                break;
+            case RoleProfessional.TheWindWarrior:
+                this.gameObject.AddComponent<RoleTheWindWarrior>().rolePlayer = this;                
+                break;
+            case RoleProfessional.TheWaterWarrior:
+                this.gameObject.AddComponent<RoleTheWaterWarrior>().rolePlayer = this;
                 break;
             default:
                 break;
@@ -47,7 +67,7 @@ public class Role : MonoBehaviour
         {
             PlayGameConsole.rolesPlayer.Add(this);
         }
-       
+
     }
 
     //大地图下角色死亡

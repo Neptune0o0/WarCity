@@ -64,13 +64,13 @@ public class UiCanvasConsole : MonoBehaviour
         {
             roleProfessionalPanel.SetActive(true);
 
-            InterfaceThePlayerSkill(rolePlayer.roleStruct.roleProfessional);
+            //InterfaceThePlayerSkill(rolePlayer.roleStruct.roleProfessional);
         }
             
         //调用职业相关方法
         switch (rolePlayer.roleStruct.roleProfessional)
         {
-            case RoleProfessional.TheWarrior:
+            case RoleProfessional.TheFireWarrior:
                 RoleButtonRegister_Warrior();
                 break;
             default:
@@ -121,7 +121,7 @@ public class UiCanvasConsole : MonoBehaviour
         }
     }
 
-
+    //敌人回合结束
     public void EnemyEndTheTurn()
     {
         buttonTurn.SetActive(true);

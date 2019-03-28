@@ -75,7 +75,7 @@
     <Compile Include="Assets\Game\Common\Script\MapGameConsole.cs" />
     <Compile Include="Assets\Game\Common\Script\PlayGameConsole.cs" />
     <Compile Include="Assets\Game\Common\Script\Role.cs" />
-    <Compile Include="Assets\Game\Common\Script\RoleProfessionalTheWarrior.cs" />
+    <Compile Include="Assets\Game\Common\Script\RoleProfessional.cs" />
     <Compile Include="Assets\Game\Common\Script\SceneConsole.cs" />
     <Compile Include="Assets\Game\Common\Script\UiCanvasConsole.cs" />
     <Compile Include="Assets\Game\Fight\Script\FightConsole.cs" />

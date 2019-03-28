@@ -54,7 +54,20 @@ public struct RoleStruct
 /// </summary>
 public enum RoleProfessional
 {
-    TheWarrior,//战士
+    ThePrince,//王子
+    TheFishMen,
+    TheBirdMan,
+    TheEnchanter,
+    TheMonks,
+    TheBruiser,
+    TheBigMan,
+    TheWindWarrior,
+    TheWaterWarrior,
+    TheFireWarrior,
+    TheElementMan,
+    TheElementalsWind,
+    TheElementalsWater,
+    TheElementalsFire,
 }
 
 
