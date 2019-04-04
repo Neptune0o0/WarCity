@@ -35,7 +35,7 @@ public class MapGameConsole : MonoBehaviour
         for (int i = 0; i < playGame.transform.childCount; i++)
         {
             brickArray_ItemBrick.Add(playGame.transform.GetChild(i).GetComponent<ItemBrick>());
-            
+
             if (playGame.transform.GetChild(i).GetComponent<Castle>())
             {
                 castle = playGame.transform.GetChild(i).GetComponent<Castle>();
@@ -46,9 +46,9 @@ public class MapGameConsole : MonoBehaviour
                 else if (playGame.transform.GetChild(i).GetComponent<Castle>().castleType == CastleType.TheEnemyCastle)
                 {
                     castleEnemy = playGame.transform.GetChild(i).GetComponent<Castle>();
-                }              
+                }
             }
-           
+
         }
     }
 
@@ -63,6 +63,56 @@ public class MapGameConsole : MonoBehaviour
         yDis = Mathf.Abs(yDis);
 
         return xDis + yDis;
+    }
+
+    //判断两个地砖的距离 A*算法
+    public int JudgeDistancesAStar(ItemBrick initial, ItemBrick target)
+    {
+        List<ItemBrick> itemBricks = new List<ItemBrick>();
+
+        for (int i = 0; i < 100; i++)
+        {
+            if (i == 0)
+            {
+                itemBricks = JudgeAroundBrick(initial);
+
+                for (int j = 0; j < itemBricks.Count; j++)
+                {
+                    itemBricks[j].dis = 1;
+                }
+            }
+            else
+            {
+                List<ItemBrick> itemsTemp = new List<ItemBrick>();
+                for (int j = 0; j < itemBricks.Count; j++)
+                {
+                    itemsTemp.AddRange(JudgeAroundBrick(itemBricks[j]));
+                }
+
+                for (int j = 0; j < itemsTemp.Count; j++)
+                {
+                    itemsTemp[j].dis = i+1;
+                }
+                itemBricks.AddRange(itemsTemp);
+            }
+
+            for (int j = 0; j < itemBricks.Count; j++)
+            {
+                if (itemBricks[j] == target)
+                {
+                    return itemBricks[j].dis;
+                } 
+            }
+        }
+
+
+        for (int i = 0; i < brickArray_ItemBrick.Count; i++)
+        {
+            brickArray_ItemBrick[i].isTag = false;
+            brickArray_ItemBrick[i].dis = 0;
+        }
+
+        return 0;
     }
 
     //显示玩家可移动砖块提示
@@ -85,48 +135,42 @@ public class MapGameConsole : MonoBehaviour
             return;
         }
 
-        int xDis, yDis;
+        List<ItemBrick> itemBricks = new List<ItemBrick>();
+
+        for (int i = 0; i < currentRole.roleStruct.speed; i++)
+        {
+            if (i == 0)
+            {
+                itemBricks = JudgeAroundBrick(currentRole.thisItemBrick);
+            }
+            else
+            {
+                List<ItemBrick> itemsTemp = new List<ItemBrick>();
+                for (int j = 0; j < itemBricks.Count; j++)
+                {
+                    itemsTemp.AddRange(JudgeAroundBrick(itemBricks[j]));
+                }
+                itemBricks.AddRange(itemsTemp);
+            }
+        }
+
+        //实例化移动提示
+        for (int i = 0; i < itemBricks.Count; i++)
+        {
+            GameObject gameObject = Instantiate(BrickTipMove, itemBricks[i].transform.position, Quaternion.identity, itemBricks[i].transform);
+            gameObject.transform.position -= Vector3.forward;
+            itemBricks[i].brickTip = gameObject;
+            brickTipMove_GameObject.Add(gameObject);
+        }
 
         for (int i = 0; i < brickArray_ItemBrick.Count; i++)
         {
-            xDis = brickArray_ItemBrick[i].x - currentRole.thisItemBrick.x;
-            yDis = brickArray_ItemBrick[i].y - currentRole.thisItemBrick.y;
-            xDis = Mathf.Abs(xDis);
-            yDis = Mathf.Abs(yDis);
-
-            if ((xDis + yDis) < currentRole.roleStruct.speed && (xDis + yDis) > 0)
-            {
-                if (brickArray_ItemBrick[i].brickType != BrickType.TheWater &&
-                    brickArray_ItemBrick[i].brickType != BrickType.TheMountain &&
-                    brickArray_ItemBrick[i].rolePlayer == null)
-                {
-                    GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
-                    gameObject.transform.position -= Vector3.forward;
-                    brickArray_ItemBrick[i].brickTip = gameObject;
-                    brickTipMove_GameObject.Add(gameObject);
-                }
-
-                if (brickArray_ItemBrick[i].brickType == BrickType.TheWater && currentRole.roleStruct.roleProfessional == RoleProfessional.TheFishMen)
-                {
-                    GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
-                    gameObject.transform.position -= Vector3.forward;
-                    brickArray_ItemBrick[i].brickTip = gameObject;
-                    brickTipMove_GameObject.Add(gameObject);
-                }
-
-                if (brickArray_ItemBrick[i].brickType == BrickType.TheMountain && currentRole.roleStruct.roleProfessional == RoleProfessional.TheBirdMan)
-                {
-                    GameObject gameObject = Instantiate(BrickTipMove, brickArray_ItemBrick[i].transform.position, Quaternion.identity, brickArray_ItemBrick[i].transform);
-                    gameObject.transform.position -= Vector3.forward;
-                    brickArray_ItemBrick[i].brickTip = gameObject;
-                    brickTipMove_GameObject.Add(gameObject);
-                }
-            }
+            brickArray_ItemBrick[i].isTag = false;
         }
     }
 
     //移动方法
-    public void MoveTo(ItemBrick itemBrick,TweenCallback tweenCallback = null)
+    public void MoveTo(ItemBrick itemBrick, TweenCallback tweenCallback = null)
     {
         currentRole.thisItemBrick.rolePlayer = null;
 
@@ -149,7 +193,7 @@ public class MapGameConsole : MonoBehaviour
         }
 
         currentRole.roleStruct.active -= 1;
-    }    
+    }
 
     //攻击提示显示
     public void AttackAtDistance()
@@ -207,7 +251,7 @@ public class MapGameConsole : MonoBehaviour
             SceneConsole.instance.rolePlayer = targetRole.GetComponent<Role>();
             SceneConsole.instance.roleEnemy = currentRole;
         }
-       
+
 
         //销毁攻击提示
         for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
@@ -240,6 +284,44 @@ public class MapGameConsole : MonoBehaviour
 
         return brickArray_ItemBrick[disIndex];
     }
-    
+
+    //判断周围上下左右的可移动地砖
+    public List<ItemBrick> JudgeAroundBrick(ItemBrick itemBrick)
+    {
+        List<ItemBrick> itemBricks = new List<ItemBrick>();
+
+        itemBrick.isTag = true;
+
+        Vector2[] vector2s = { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1) };
+
+        for (int j = 0; j < 4; j++)
+        {
+            for (int i = 0; i < brickArray_ItemBrick.Count; i++)
+            {
+                if (brickArray_ItemBrick[i].isTag == true)
+                {
+                    continue;
+                }
+                if (brickArray_ItemBrick[i].x == itemBrick.x + vector2s[j].x &&
+                    brickArray_ItemBrick[i].y == itemBrick.y + vector2s[j].y)
+                {
+                    brickArray_ItemBrick[i].isTag = true;
+
+                    if (((brickArray_ItemBrick[i].brickType != BrickType.TheWater &&
+                    brickArray_ItemBrick[i].brickType != BrickType.TheMountain &&
+                    brickArray_ItemBrick[i].rolePlayer == null))
+                    || (brickArray_ItemBrick[i].brickType == BrickType.TheWater && currentRole.roleStruct.roleProfessional == RoleProfessional.TheFishMen)
+                    || (brickArray_ItemBrick[i].brickType == BrickType.TheMountain && currentRole.roleStruct.roleProfessional == RoleProfessional.TheBirdMan))
+                    {
+                        itemBricks.Add(brickArray_ItemBrick[i]);
+                    }
+                }
+            }
+        }
+
+        return itemBricks;
+    }
+
+
 
 }

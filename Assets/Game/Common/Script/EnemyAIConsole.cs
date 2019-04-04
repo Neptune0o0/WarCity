@@ -86,6 +86,7 @@ public class EnemyAIConsole : MonoBehaviour
         EnemyThinking();
     }
 
+    //判断距离敌人角色最近的玩家单位
     private Role JudgeRecently(Role role)
     {
         int dis = 0;
@@ -94,7 +95,7 @@ public class EnemyAIConsole : MonoBehaviour
         //判断距离最近的玩家
         for (int i = 0; i < PlayGameConsole.rolesPlayer.Count; i++)
         {
-            dis = MapGameConsole.instance.JudgeDistances(role.thisItemBrick,
+            dis = MapGameConsole.instance.JudgeDistancesAStar(role.thisItemBrick,
                 PlayGameConsole.rolesPlayer[i].thisItemBrick);
 
             if (dis < tempdis)
@@ -106,4 +107,6 @@ public class EnemyAIConsole : MonoBehaviour
 
         return PlayGameConsole.rolesPlayer[disIndex];
     }
+
+   
 }

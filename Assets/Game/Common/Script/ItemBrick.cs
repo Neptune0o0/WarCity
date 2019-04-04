@@ -11,6 +11,11 @@ public class ItemBrick : MonoBehaviour
     public BrickType brickType;
 
     public GameObject rolePlayer,brickTip;
+
+    //是否被标记查找
+    public bool isTag;
+
+    public int dis;
 }
 
 
