@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5607494327217771187
+--- !u!1 &5049110348444368445
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2209591525682613864}
-  - component: {fileID: 6955548710429295834}
-  - component: {fileID: 3927724646413594783}
+  - component: {fileID: 8370706231425520486}
+  - component: {fileID: 7338867351310453225}
+  - component: {fileID: 7346576076307191692}
   m_Layer: 0
-  m_Name: RoleEnemy
+  m_Name: TheElementalsWind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2209591525682613864
+--- !u!4 &8370706231425520486
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5607494327217771187}
+  m_GameObject: {fileID: 5049110348444368445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6955548710429295834
+--- !u!212 &7338867351310453225
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5607494327217771187}
+  m_GameObject: {fileID: 5049110348444368445}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5be778e3791312c47af7c1cd81a0f4d6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: afc25d55d552c6b49a5a5541b0742f8a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,29 +80,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3927724646413594783
+--- !u!114 &7346576076307191692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5607494327217771187}
+  m_GameObject: {fileID: 5049110348444368445}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5cb1a280c5b2fde4eac412998b2fca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roleType: 1
+  roleType: 0
   roleStruct:
-    roleName: "\u61D2\u4EBAB"
+    roleName: "\u98CE\u7CBE\u7075"
     id: 0
     hp: 100
-    mp: 10
-    speed: 0
+    mp: 100
+    speed: 3
     exp: 0
-    lv: 0
+    lv: 1
     active: 2
     attack: 10
     isActive: 1
-    roleProfessional: 0
+    maxHp: 100
+    maxMp: 0
+    maxExp: 0
+    roleProfessional: 11
   thisItemBrick: {fileID: 0}

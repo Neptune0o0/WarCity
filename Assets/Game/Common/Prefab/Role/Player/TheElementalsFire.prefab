@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7338867351310453225}
   - component: {fileID: 7346576076307191692}
   m_Layer: 0
-  m_Name: RolePlayer
+  m_Name: TheElementalsFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 626cc228eecd73640bf9bcbb1041ceb5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9723fa1570f9b434684fcae20a8866f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roleType: 0
   roleStruct:
-    roleName: "\u738B\u5B50"
+    roleName: "\u706B\u7CBE\u7075"
     id: 0
     hp: 100
     mp: 100
@@ -104,5 +104,8 @@ MonoBehaviour:
     active: 2
     attack: 10
     isActive: 1
-    roleProfessional: 0
+    maxHp: 100
+    maxMp: 0
+    maxExp: 0
+    roleProfessional: 13
   thisItemBrick: {fileID: 0}

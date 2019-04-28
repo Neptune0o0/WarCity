@@ -104,5 +104,8 @@ MonoBehaviour:
     active: 2
     attack: 5
     isActive: 1
-    roleProfessional: 1
+    maxHp: 80
+    maxMp: 0
+    maxExp: 0
+    roleProfessional: 3
   thisItemBrick: {fileID: 0}

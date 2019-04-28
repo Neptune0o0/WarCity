@@ -45,6 +45,7 @@ public struct RoleStruct
     public string roleName;
     public int id, hp, mp, speed, exp, lv, active,attack;
     public bool isActive;
+    public int maxHp, maxMp, maxExp;
     //职业
     public RoleProfessional roleProfessional;
 }

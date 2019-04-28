@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public class UiCanvasConsole : MonoBehaviour
 {
     public static UiCanvasConsole instance;
 
-    public GameObject playerRolePanel,roleProfessionalPanel, castlePanel;
+    public GameObject playerRolePanel,roleProfessionalPanel, castlePanelPage;
 
     public Text roleName, id, hp, mp, exp, lv, isActive;
 
@@ -15,11 +16,14 @@ public class UiCanvasConsole : MonoBehaviour
 
     public GameObject buttonTurn, buttonOpenCastlePanel;
 
-
+    bool castlePanelMove;
 
     private void Awake()
     {
         instance = this;
+
+        castlePanelMove = false;
+        castlePanelPage.SetActive(false);
     }
 
     public void ButtonMove()
@@ -37,14 +41,39 @@ public class UiCanvasConsole : MonoBehaviour
     //打开城堡界面
     public void ButtonOpenCastlePanel()
     {
-        if (castlePanel.activeSelf == false)
+        if (castlePanelMove == true)
         {
-            castlePanel.SetActive(true);           
+            return;
+        }
+
+        RectTransform rectTransform = castlePanelPage.GetComponent<RectTransform>();
+
+        if (castlePanelPage.activeSelf == false)
+        {
+            castlePanelPage.SetActive(true);
+            Tweener tweeners = castlePanelPage.transform.DOLocalMoveX(rectTransform.transform.localPosition.x + rectTransform.rect.width, 1f);
+            buttonOpenCastlePanel.transform.SetParent(castlePanelPage.transform);
+            tweeners.OnComplete(CastlePanelMoveEnd);
         }
         else
         {
-            castlePanel.SetActive(false);
+            Tweener tweeners = castlePanelPage.transform.DOLocalMoveX(rectTransform.transform.localPosition.x - rectTransform.rect.width, 1f);
+            tweeners.OnComplete(TweenCallback);           
         }
+
+        castlePanelMove = true;
+    }
+
+    private void TweenCallback()
+    {
+        buttonOpenCastlePanel.transform.SetParent(castlePanelPage.transform.parent);
+        castlePanelPage.SetActive(false);
+        CastlePanelMoveEnd();
+    }
+
+    private void CastlePanelMoveEnd()
+    {
+        castlePanelMove = false;
     }
 
     public void InterfaceTheRole(Role rolePlayer)
@@ -115,9 +144,9 @@ public class UiCanvasConsole : MonoBehaviour
             playerRolePanel.SetActive(false);
         }
 
-        if (castlePanel.activeSelf == true)
+        if (castlePanelPage.activeSelf == true)
         {
-            castlePanel.SetActive(false);
+            castlePanelPage.SetActive(false);
         }
     }
 

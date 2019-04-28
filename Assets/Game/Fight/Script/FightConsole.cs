@@ -8,6 +8,8 @@ public class FightConsole : MonoBehaviour
 
     public GameObject player, enemy;
 
+    public GameObject playerPos;
+
     private FightPlayer fightPlayer;
     private FightEnemy fightEnemy;
 
@@ -15,7 +17,9 @@ public class FightConsole : MonoBehaviour
     private float timeCountDown;
     public TextMesh timeTextMesh;
 
-    private void Awake()
+    public GameObject[] role;
+
+    private void Start()
     {
         instance = this;
 
@@ -43,6 +47,9 @@ public class FightConsole : MonoBehaviour
     //初始化
     public void Initial()
     {
+        player = Instantiate(role[(int)SceneConsole.instance.rolePlayer.roleStruct.roleProfessional], playerPos.transform.position, Quaternion.identity);
+        player.transform.SetParent(this.transform);
+
         fightPlayer = player.GetComponent<FightPlayer>();
         fightEnemy = enemy.GetComponent<FightEnemy>();
         if (SceneConsole.instance)
@@ -51,11 +58,15 @@ public class FightConsole : MonoBehaviour
             fightEnemy.roleStruct = SceneConsole.instance.roleEnemy.roleStruct;
         }
 
+        FightUIConsole.instance.UpdatePlayerHp((float)fightPlayer.roleStruct.hp/ fightPlayer.roleStruct.maxHp);
+        FightUIConsole.instance.UpdateEnemyHp((float)fightEnemy.roleStruct.hp / fightEnemy.roleStruct.maxHp);
     }
 
     public void AttackInjuryMethod()
     {
         fightEnemy.BeInjured(fightPlayer.roleStruct.attack, player);
+
+        FightUIConsole.instance.UpdateEnemyHp((float)fightEnemy.roleStruct.hp / fightEnemy.roleStruct.maxHp);
     }
 
     //战斗结束
