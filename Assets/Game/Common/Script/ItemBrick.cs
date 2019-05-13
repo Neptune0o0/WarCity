@@ -10,6 +10,7 @@ public class ItemBrick : MonoBehaviour
     //当前地砖类型
     public BrickType brickType;
 
+    //当前地砖的单位物体 和提示物体
     public GameObject rolePlayer,brickTip;
 
     //是否被标记查找

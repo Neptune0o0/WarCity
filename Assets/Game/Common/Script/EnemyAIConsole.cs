@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 控制敌人行动规则的脚本
+/// </summary>
 public class EnemyAIConsole : MonoBehaviour
 {
     public static EnemyAIConsole instance;
@@ -15,6 +18,7 @@ public class EnemyAIConsole : MonoBehaviour
 
     }
 
+    //敌人思考方法
     public void EnemyThinking()
     {
         indexMax = PlayGameConsole.rolesEnemy.Count;

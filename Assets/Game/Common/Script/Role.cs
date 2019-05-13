@@ -83,5 +83,5 @@ public class Role : MonoBehaviour
         {
             PlayGameConsole.rolesPlayer.Remove(this);
         }
-    }
+    }  
 }

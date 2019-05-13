@@ -22,6 +22,8 @@ public class MapGameConsole : MonoBehaviour
     private List<GameObject> brickTipMove_GameObject;
     private List<GameObject> brickTipAttack_GameObject;
 
+    private GameObject sceneConsoleObject;//场景总的父物体
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +52,8 @@ public class MapGameConsole : MonoBehaviour
             }
 
         }
+
+        sceneConsoleObject = SceneConsole.instance.gameObject;
     }
 
     //判断两个地砖的距离
@@ -91,7 +95,7 @@ public class MapGameConsole : MonoBehaviour
 
                 for (int j = 0; j < itemsTemp.Count; j++)
                 {
-                    itemsTemp[j].dis = i+1;
+                    itemsTemp[j].dis = i + 1;
                 }
                 itemBricks.AddRange(itemsTemp);
             }
@@ -101,7 +105,7 @@ public class MapGameConsole : MonoBehaviour
                 if (itemBricks[j] == target)
                 {
                     return itemBricks[j].dis;
-                } 
+                }
             }
         }
 
@@ -115,20 +119,34 @@ public class MapGameConsole : MonoBehaviour
         return 0;
     }
 
+    //销毁相关移动 或者 攻击 提示
+    public void DestroyBrickTip(bool move = true, bool attack = true)
+    {
+        if (attack == true)
+        {
+            //销毁攻击提示
+            for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
+            {
+                Destroy(brickTipAttack_GameObject[i]);
+            }
+        }
+
+        if (move == true)
+        {
+            //销毁移动提示
+            for (int i = 0; i < brickTipMove_GameObject.Count; i++)
+            {
+                Destroy(brickTipMove_GameObject[i]);
+            }
+        }
+
+    }
+
     //显示玩家可移动砖块提示
     public void MoveAtDistance()
     {
-        //销毁攻击提示
-        for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
-        {
-            Destroy(brickTipAttack_GameObject[i]);
-        }
-
-        //销毁移动提示
-        for (int i = 0; i < brickTipMove_GameObject.Count; i++)
-        {
-            Destroy(brickTipMove_GameObject[i]);
-        }
+        //销毁相关提示
+        DestroyBrickTip();
 
         if (currentRole.roleStruct.active <= 0)
         {
@@ -186,29 +204,24 @@ public class MapGameConsole : MonoBehaviour
 
         tweeners.OnComplete(tweenCallback);//设置一个事件，就是动画播放完成后执行下一步，可以执行某一个函数。        
 
-        //销毁移动提示
-        for (int i = 0; i < brickTipMove_GameObject.Count; i++)
-        {
-            Destroy(brickTipMove_GameObject[i]);
-        }
+        DestroyBrickTip(true, false);
 
         currentRole.roleStruct.active -= 1;
+
+        UiCanvasConsole.instance.ChangeRoleSelectTip(false);
+
+        if (currentRole.roleType == RoleType.ThePlayerRole)
+        {
+            //刷新UI显示
+            UiPlayerRolePanel.instance.InterfaceThePlayerUI(currentRole);
+        }
+       
     }
 
     //攻击提示显示
     public void AttackAtDistance()
     {
-        //销毁移动提示
-        for (int i = 0; i < brickTipMove_GameObject.Count; i++)
-        {
-            Destroy(brickTipMove_GameObject[i]);
-        }
-
-        //销毁攻击提示
-        for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
-        {
-            Destroy(brickTipAttack_GameObject[i]);
-        }
+        DestroyBrickTip();
 
         if (currentRole.roleStruct.active <= 0)
         {
@@ -234,7 +247,7 @@ public class MapGameConsole : MonoBehaviour
         }
     }
 
-    //玩家攻击选中敌人
+    //攻击选中敌人
     public void AttackTo(GameObject targetRole, RoleType roleType)
     {
         //切换战斗场景
@@ -252,12 +265,7 @@ public class MapGameConsole : MonoBehaviour
             SceneConsole.instance.roleEnemy = currentRole;
         }
 
-
-        //销毁攻击提示
-        for (int i = 0; i < brickTipAttack_GameObject.Count; i++)
-        {
-            Destroy(brickTipAttack_GameObject[i]);
-        }
+        DestroyBrickTip(false, true);
 
         currentRole.roleStruct.active -= 1;
     }
@@ -322,6 +330,41 @@ public class MapGameConsole : MonoBehaviour
         return itemBricks;
     }
 
+    //判断城堡当前是否有单位存在 false没有 true有
+    public bool JudgeCastleHaveUnit(CastleType castleType)
+    {
+        if (castleType == CastleType.ThePlayerCastle)
+        {
+            if (castlePlayer.itemBrick.rolePlayer == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else if (castleType == CastleType.TheEnemyCastle)
+        {
+            if (castleEnemy.itemBrick.rolePlayer == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
+        return false;
+    }
+
+    //在城堡位置创建角色
+    public void CreateRoleUnit(GameObject role)
+    {
+        GameObject gameObject = Instantiate(role, castlePlayer.transform.position + Vector3.back * 2, Quaternion.identity);
+
+        gameObject.transform.SetParent(sceneConsoleObject.transform);
+    }
 
 }

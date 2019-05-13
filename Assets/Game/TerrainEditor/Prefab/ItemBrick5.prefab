@@ -156,6 +156,8 @@ MonoBehaviour:
   brickType: 5
   rolePlayer: {fileID: 0}
   brickTip: {fileID: 0}
+  isTag: 0
+  dis: 0
 --- !u!114 &241620542856808324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,3 +170,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e93b3f0538d16479f04c30c4876dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  castleType: 0
+  itemBrick: {fileID: 6889408624764341223}

@@ -34,8 +34,8 @@ public enum BrickTipType
 public enum PlayState
 {
     TheNull,
-    ThePlayerRound,
-    TheEnemyRound,
+    ThePlayerRound,//玩家回合
+    TheEnemyRound,//敌人回合
 }
 
 //角色结构体
@@ -43,9 +43,8 @@ public enum PlayState
 public struct RoleStruct
 {
     public string roleName;
-    public int id, hp, mp, speed, exp, lv, active,attack;
-    public bool isActive;
-    public int maxHp, maxMp, maxExp;
+    public int id, hp, mp, speed, exp, lv, active, attack;
+    public int maxHp, maxMp, maxExp,maxLv;
     //职业
     public RoleProfessional roleProfessional;
 }
@@ -56,15 +55,15 @@ public struct RoleStruct
 public enum RoleProfessional
 {
     ThePrince,//王子
-    TheFishMen,
-    TheBirdMan,
-    TheEnchanter,
-    TheMonks,
-    TheBruiser,
-    TheBigMan,
-    TheWindWarrior,
-    TheWaterWarrior,
-    TheFireWarrior,
+    TheFishMen,//鱼人
+    TheBirdMan,//飞行家
+    TheEnchanter,//魔法师
+    TheMonks,//僧侣
+    TheBruiser,//格斗家
+    TheBigMan,//大个
+    TheWindWarrior,//风战士
+    TheWaterWarrior,//水战士
+    TheFireWarrior,//火战士
     TheElementMan,
     TheElementalsWind,
     TheElementalsWater,
@@ -98,13 +97,13 @@ public class PlayGameConsole : MonoBehaviour
         {
             UpdateMouseDown();
         }
-        
+
     }
 
     //鼠标按下
     private void UpdateMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() )
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))//左键
             {
@@ -117,6 +116,8 @@ public class PlayGameConsole : MonoBehaviour
 
                         if (itemBrick.rolePlayer != null && itemBrick.brickTip == null)//点击角色
                         {
+                            MapGameConsole.instance.DestroyBrickTip();
+
                             switch (itemBrick.rolePlayer.GetComponent<Role>().roleType)
                             {
                                 case RoleType.ThePlayerRole:
@@ -133,7 +134,7 @@ public class PlayGameConsole : MonoBehaviour
                         }
                         else if (itemBrick.rolePlayer == null && itemBrick.brickTip == null)//点击地形
                         {
-                            print("点击：" + itemBrick.brickType);                           
+                            print("点击：" + itemBrick.brickType);
                         }
                         else if (itemBrick.brickTip != null)//点击移动或者攻击
                         {
@@ -141,25 +142,25 @@ public class PlayGameConsole : MonoBehaviour
                             {
                                 case BrickTipType.BrickTipMove:
                                     print("点击移动");
-                                    MapGameConsole.instance.MoveTo(itemBrick);
+                                    MapGameConsole.instance.MoveTo(itemBrick, PlayerMoveEnd);
                                     break;
                                 case BrickTipType.BrickTipAttack:
                                     if (itemBrick.rolePlayer != null && itemBrick.rolePlayer.GetComponent<Role>().roleType == RoleType.TheEnemyRole)
                                     {
                                         print("点击攻击");
-                                        MapGameConsole.instance.AttackTo(itemBrick.rolePlayer,RoleType.ThePlayerRole);
-                                    }                             
+                                        MapGameConsole.instance.AttackTo(itemBrick.rolePlayer, RoleType.ThePlayerRole);
+                                    }
                                     break;
                                 default:
                                     break;
-                            }                            
-                        }                       
-                    }                   
+                            }
+                        }
+                    }
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Mouse1))//右键
             {
-
+                MapGameConsole.instance.DestroyBrickTip();
             }
         }
 
@@ -169,6 +170,7 @@ public class PlayGameConsole : MonoBehaviour
     private void OnThePlayerRole(GameObject gameObject)
     {
         Role rolePlayer = gameObject.GetComponent<Role>();
+
         MapGameConsole.instance.currentRole = rolePlayer;
 
         //刷新显示玩家UI信息
@@ -180,6 +182,12 @@ public class PlayGameConsole : MonoBehaviour
     {
         ////刷新显示玩家UI信息
         //UiCanvasConsole.instance.InterfaceTheRole(gameObject.GetComponent<RolePlayer>());
+    }
+
+    //玩家移动到指定位置调用的方法
+    private void PlayerMoveEnd()
+    {
+        UiCanvasConsole.instance.ChangeRoleSelectTip(true);
     }
 
     //玩家回合结束
@@ -200,7 +208,7 @@ public class PlayGameConsole : MonoBehaviour
     {
         EnemyAIConsole.index = 0;
 
-        EnemyAIConsole.instance.EnemyThinking();       
+        EnemyAIConsole.instance.EnemyThinking();
     }
 
     //敌人回合结束

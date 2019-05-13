@@ -9,6 +9,9 @@ public enum SceneFight
     TheWater,
 }
 
+/// <summary>
+/// 控制场景加载相关的脚本
+/// </summary>
 public class SceneConsole : MonoBehaviour
 {
     public static SceneConsole instance;
@@ -57,6 +60,12 @@ public class SceneConsole : MonoBehaviour
         if (PlayGameConsole.playState == PlayState.TheEnemyRound)
         {
             EnemyAIConsole.instance.AttackEnd();
+        }
+        //玩家回合战斗结束
+        else
+        {
+            //刷新UI显示
+            UiPlayerRolePanel.instance.InterfaceThePlayerUI(rolePlayer);
         }
     }
 }

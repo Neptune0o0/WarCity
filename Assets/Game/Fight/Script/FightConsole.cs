@@ -74,8 +74,31 @@ public class FightConsole : MonoBehaviour
     {        
         if (SceneConsole.instance)
         {
+            //玩家增加经验
+            if (fightPlayer.roleStruct.maxLv > fightPlayer.roleStruct.lv)
+            {
+                fightPlayer.roleStruct.exp += 10;
+                if (fightPlayer.roleStruct.exp >= fightPlayer.roleStruct.maxExp)
+                {
+                    fightPlayer.roleStruct.lv += 1;
+                    print("bingo ！等级提升！ 是否增加相应的属性？？？");
+                    if (fightPlayer.roleStruct.lv == fightPlayer.roleStruct.maxLv)
+                    {
+                        fightPlayer.roleStruct.exp = fightPlayer.roleStruct.maxLv;
+                    }
+                    else
+                    {
+                        fightPlayer.roleStruct.exp = 0;
+                    }
+                    
+                   
+                }
+            }
+            
+
+
             SceneConsole.instance.rolePlayer.roleStruct = fightPlayer.roleStruct;
-            SceneConsole.instance.roleEnemy.roleStruct = fightEnemy.roleStruct;
+            SceneConsole.instance.roleEnemy.roleStruct = fightEnemy.roleStruct;           
 
             if (SceneConsole.instance.roleEnemy.roleStruct.hp <= 0)
             {
